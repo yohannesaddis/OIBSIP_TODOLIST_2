@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator | Yohannes</title>
+  <style>
+    /* ==== Base Style ==== */
+    :root {
+      --bg-color: #f8f8f8;
+      --calc-bg: #ffffff;
+      --accent: #3b82f6; /* light blue accent */
+      --text: #333;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .calculator {
+      background-color: var(--calc-bg);
+      box-shadow: 0 4px 15px var(--shadow);
+      border-radius: 20px;
+      padding: 20px;
+      width: 100%;
+      max-width: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .display {
+      background-color: #f0f4f8;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 2rem;
+      text-align: right;
+      margin-bottom: 15px;
+      color: var(--text);
+      word-wrap: break-word;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      padding: 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      background-color: #f1f5f9;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    button:hover {
+      background-color: #e2e8f0;
+    }
+
+    .operator {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .operator:hover {
+      background-color: #2563eb;
+    }
+
+    .equal {
+      background-color: #10b981; /* green */
+      color: white;
+      grid-column: span 2;
+    }
+
+    .equal:hover {
+      background-color: #059669;
+    }
+
+    @media (max-width: 480px) {
+      .calculator {
+        padding: 15px;
+        border-radius: 15px;
+      }
+      button {
+        padding: 15px;
+        font-size: 1rem;
+      }
+      .display {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div id="display" class="display">0</div>
+    <div class="buttons">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="deleteLast()">⌫</button>
+      <button onclick="append('%')">%</button>
+      <button class="operator" onclick="append('/')">÷</button>
+
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button class="operator" onclick="append('*')">×</button>
+
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button class="operator" onclick="append('-')">−</button>
+
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button class="operator" onclick="append('+')">+</button>
+
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+
+    function append(value) {
+      if (display.textContent === "0" && value !== ".") {
+        display.textContent = value;
+      } else {
+        display.textContent += value;
+      }
+    }
+
+    function clearDisplay() {
+      display.textContent = "0";
+    }
+
+    function deleteLast() {
+      display.textContent = display.textContent.slice(0, -1) || "0";
+    }
+
+    function calculate() {
+      try {
+        display.textContent = eval(display.textContent.replace("%", "/100"));
+      } catch {
+        display.textContent = "Error";
+      }
+    }
+  </script>
+</body>
+</html>
